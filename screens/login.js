@@ -27,8 +27,10 @@ class LoginScreen extends Component{
             if(response.status === 200){
                 return response.json()
             }else if(response.status === 400){
+                alert("incorrect email or password"); //an alert will pop up on screen as well as showing it in the console
                 throw 'Invalid email or password';
             }else{
+                alert("Something went wrong");
                 throw 'Something went wrong';
             }
         })

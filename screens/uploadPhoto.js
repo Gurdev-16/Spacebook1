@@ -1,9 +1,11 @@
 import React, {Component} from 'react';
 import {View, Text, FlatList, TabBarIOS} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Button } from 'react-native';
 //import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-class SearchScreen extends Component {
+
+class UploadPhotoScreen extends Component {
   constructor(props){
     super(props);
 
@@ -28,7 +30,7 @@ class SearchScreen extends Component {
   getData = async () => {
     const id = await AsyncStorage.getItem('@session_id');
     const value = await AsyncStorage.getItem('@session_token');
-    return fetch("http://localhost:3333/api/1.0.0/search" , {
+    return fetch("http://localhost:3333/api/1.0.0/search/", {
           'headers': {
             'X-Authorization':  value
           }
@@ -62,6 +64,7 @@ class SearchScreen extends Component {
   
 
   render() {
+
      if (this.state.isLoading){
       return (
         <View
@@ -77,15 +80,25 @@ class SearchScreen extends Component {
     }else{
       return (
         <View>
-          <Text>search bar</Text>
-          
-        </View>
+          <FlatList
+                data={this.state.listData}
+                renderItem={({item}) => (
+                    <View>
+                      <Text>{item.user_givenname} {item.user_familyname}</Text>
+                    </View>
+                )}
+                keyExtractor={(item,index) => item.user_id.toString()}
+              />
+        <Button
+
+         title="Sign out"
+         onPress={() => this.props.navigation.navigate("Logout")}
+         />
+     </View>
+     
       );
     }
-    
-  }
-}
 
+  }}
 
-
-export default SearchScreen;
+export default UploadPhotoScreen;

@@ -14,13 +14,7 @@ class SignupScreen extends Component{
     }
 
     signup = () => {
-        const valid = password.length > 5;
-        if (valid) {
-            setValidPassword(true);
-          } else {
-            setValidPassword(false);
-          }
-          
+      
         return fetch("http://localhost:3333/api/1.0.0/user", {
             method: 'post',
             headers: {

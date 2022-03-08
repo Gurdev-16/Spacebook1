@@ -30,7 +30,7 @@ class HomeScreen extends Component {
   getData = async () => {
     const id = await AsyncStorage.getItem('@session_id');
     const value = await AsyncStorage.getItem('@session_token');
-    return fetch("http://localhost:3333/api/1.0.0/search", {
+    return fetch("http://localhost:3333/api/1.0.0/search/", {
           'headers': {
             'X-Authorization':  value
           }
@@ -98,9 +98,6 @@ class HomeScreen extends Component {
      
       );
     }
-    
-  
-  
 
   }}
 
