@@ -20,3 +20,10 @@ react-native-safe-area-context
 @testing-library/react-native
 
 react-test-renderer
+
+
+
+
+
+
+expo init Spacebook-App
