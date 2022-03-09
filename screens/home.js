@@ -2,8 +2,6 @@ import React, {Component} from 'react';
 import {View, Text, FlatList, TabBarIOS} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Button } from 'react-native';
-//import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-
 
 class HomeScreen extends Component {
   constructor(props){
@@ -53,7 +51,7 @@ class HomeScreen extends Component {
         .catch((error) => {
             console.log(error);
         })
-  }
+      }
 
   checkLoggedIn = async () => {
     const value = await AsyncStorage.getItem('@session_token');
@@ -62,9 +60,7 @@ class HomeScreen extends Component {
     }
   };
   
-
   render() {
-
      if (this.state.isLoading){
       return (
         <View
@@ -90,7 +86,6 @@ class HomeScreen extends Component {
                 keyExtractor={(item,index) => item.user_id.toString()}
               />
         <Button
-
          title="Sign out"
          onPress={() => this.props.navigation.navigate("Logout")}
          />
@@ -98,7 +93,6 @@ class HomeScreen extends Component {
      
       );
     }
-
-  }}
-
+  }
+}
 export default HomeScreen;

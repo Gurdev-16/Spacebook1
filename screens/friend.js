@@ -9,17 +9,19 @@ class FriendScreen extends Component {
 
     this.state = {
       isLoading: true,
-      listData: []
-    }
+      listData: [],
+
+    };
   }
 
   componentDidMount() {
     this.unsubscribe = this.props.navigation.addListener('focus', () => {
       this.checkLoggedIn();
     });
-  
     this.getData();
+      
   }
+
 
   componentWillUnmount() {
     this.unsubscribe();
@@ -28,9 +30,10 @@ class FriendScreen extends Component {
   getData = async () => {
     const id = await AsyncStorage.getItem('@session_id');
     const value = await AsyncStorage.getItem('@session_token');
-    return fetch("http://localhost:3333/api/1.0.0/user/" + id + "/friends",  {
+    return fetch("http://localhost:3333/api/1.0.0/user/"+id+"/friends",  {
           'headers': {
             'X-Authorization':  value
+        
           }
         })
         .then((response) => {
@@ -39,6 +42,7 @@ class FriendScreen extends Component {
             }else if(response.status === 401){
               this.props.navigation.navigate("Login");
             }else{
+              alert("Something went wrong");
                 throw 'Something went wrong';
             }
         })
@@ -47,6 +51,11 @@ class FriendScreen extends Component {
             isLoading: false,
             listData: responseJson
           })
+        })
+        .then(async () => {
+          await AsyncStorage.setItem('@session_token')
+          await AsyncStorage.setItem('@session_id')
+        
         })
         .catch((error) => {
             console.log(error);
@@ -59,7 +68,6 @@ class FriendScreen extends Component {
         this.props.navigation.navigate('Login');
     }
   };
-  
 
   render() {
      if (this.state.isLoading){
@@ -78,18 +86,14 @@ class FriendScreen extends Component {
       return (
         <View>
           <FlatList
-                data={this.state.listData}
-                renderItem={({item}) => (
+                data={this.state.listData.id}
+                renderItem={({item,}) => (
                     <View>
-                      <Text>{item.user_givenname} {item.user_familyname}</Text>
+                      <Text>{item.user_givenname} {item.user._familyname}</Text>
                     </View>
                 )}
                 keyExtractor={(item,index) => item.user_id.toString()}
               />
-        <Button
-            title="Sign out"
-            onPress={() => this.props.navigation.navigate("Logout")}
-/>
         </View>
       );
     }

@@ -12,6 +12,8 @@ import LogoutScreen from './screens/logout';
 import SearchScreen from './screens/search';
 import ProfileScreen from './screens/Profile';
 import UploadPhotoScreen from './screens/uploadPhoto';
+import AddPostScreen from './screens/addPost';
+
 
 
 const Stack = createNativeStackNavigator();
@@ -31,25 +33,25 @@ class App extends Component{
                     <Tab.Screen name="Profile" component={ProfileScreen} />
                     <Stack.Screen name="UploadPhoto" component={UploadPhotoScreen} />
                     <Stack.Screen name="Logout" component={LogoutScreen} />
+                    <Stack.Screen name="AddPost" component={AddPostScreen} />
                 </Stack.Navigator>
-                
             </NavigationContainer>
-        );
+         );
          
     function Nav(){
         return(
             <Tab.Navigator >
                 <Tab.Screen name="Home" component={HomeScreen} />
                 <Tab.Screen name="Profile" component={ProfileScreen} />
-                <Tab.Screen name="Friend" component={FriendScreen} />
+                <Tab.Screen name="Friends" component={FriendScreen} />
                 <Tab.Screen name="Search" component={SearchScreen} />
+                <Tab.Screen name="AddPost" component={AddPostScreen} />
                 <Tab.Screen name="Logout" component={LogoutScreen} />
                 
             </Tab.Navigator>
         )
 
     }
-        
-          }
+  }
 }
 export default App;

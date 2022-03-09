@@ -14,8 +14,7 @@ class LoginScreen extends Component{
     }
 
     login = async () => {
-           
-        
+               
         return fetch("http://localhost:3333/api/1.0.0/login", {
             method: 'post',
             headers: {
@@ -36,7 +35,8 @@ class LoginScreen extends Component{
         })
         .then(async (responseJson) => {
                 console.log(responseJson);
-                await AsyncStorage.setItem('@session_token', responseJson.token);
+                await AsyncStorage.setItem('@session_token', responseJson.token)
+                await AsyncStorage.setItem('@session_id', responseJson.id);
                 this.props.navigation.navigate("Home");
         })
         .catch((error) => {
