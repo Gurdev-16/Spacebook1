@@ -28,10 +28,10 @@ class App extends Component{
                     <Stack.Screen name="Login" component={LoginScreen} />
                     <Stack.Screen name="Signup" component={SignupScreen} />
                     <Stack.Screen name="Friend" component={FriendScreen} />
-                    <Stack.Screen options={{ headerShown: false }}  name="Home" component={HomeScreen, Nav} />  
+                    <Stack.Screen options={{ headerShown: false }}  name="Home" component={HomeScreen,Nav} />  
                     <Stack.Screen name="Search" component={SearchScreen} />
-                    <Tab.Screen name="Profile" component={ProfileScreen} />
-                    <Stack.Screen name="UploadPhoto" component={UploadPhotoScreen} />
+                    <Stack.Screen name="Profile" component={ProfileScreen} />
+                   {/*} <Stack.Screen name="UploadPhoto" component={UploadPhotoScreen} />*/}
                     <Stack.Screen name="Logout" component={LogoutScreen} />
                     <Stack.Screen name="AddPost" component={AddPostScreen} />
                 </Stack.Navigator>
@@ -41,12 +41,12 @@ class App extends Component{
     function Nav(){
         return(
             <Tab.Navigator >
-                <Tab.Screen name="Home" component={HomeScreen} />
                 <Tab.Screen name="Profile" component={ProfileScreen} />
                 <Tab.Screen name="Friends" component={FriendScreen} />
                 <Tab.Screen name="Search" component={SearchScreen} />
                 <Tab.Screen name="AddPost" component={AddPostScreen} />
                 <Tab.Screen name="Logout" component={LogoutScreen} />
+                {/*<Tab.Screen name="UploadPhoto" component={UploadPhotoScreen} />*/}
                 
             </Tab.Navigator>
         )

@@ -1,0 +1,31 @@
+............... All these needs installing .................
+
+expo init Spacebook-App
+
+
+
+
+react-native
+
+react-native-gesture-handler
+
+@react-navigation/native
+
+@react-navigation/drawer
+
+@react-native-async-storage/async-storage
+
+@react-navigation/native-stack
+
+react-native-reanimated
+
+react-native-safe-area-context
+
+@testing-library/react-native
+
+react-test-renderer 
+
+react-native-camera
+
+
+

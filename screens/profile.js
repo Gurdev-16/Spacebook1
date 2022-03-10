@@ -80,26 +80,18 @@ class ProfileScreen extends Component {
       );
     }else{
       return (
-        <View>
-          <FlatList
-                data={this.state.getData}
-                renderItem={({item}) => (
-                    <View>
-                      <Text>{item.user_givenname} {item.user_familyname}</Text>
-                    </View>
-                )}
-                keyExtractor={(item,index) => item.user_id.toString()}
-              />
-              <Button
-         title="Upload Profile Picture"
-         onPress={() => this.props.navigation.navigate("UploadPhoto")}
-         />
-
-        <Button
-         title="Sign out"
-         onPress={() => this.props.navigation.navigate("Logout")}
-         />
-     </View>
+        <View style={{flex:1, width:'100%'}}>
+        <RNCamera
+          ref={ref => {
+            this.camera = ref;
+            }}
+          style={{
+            flex:1,
+            width: '100%'
+            }}
+          />
+          <Button title="Take Photo" onPress={() => {this.takePicture()}} />
+      </View>
      
       );
     }

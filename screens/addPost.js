@@ -100,10 +100,7 @@ class AddPostScreen extends Component {
                 isLoading: false,
                 listData: responseJson
               })
-            })
-            .then(async () => {
-              await AsyncStorage.setItem('@session_token')
-              await AsyncStorage.setItem('@session_id')
+            
             
             })
             .catch((error) => {
@@ -121,11 +118,11 @@ class AddPostScreen extends Component {
 
     addItem = () => {
         let to_send = {
-            post_id: parseInt(this.state.post_id),
-            post_content: this.state.post_content,
+            id: parseInt(this.state.id),
+            content: this.state.content,
         };
 
-        return fetch("http://localhost:3333/api/1.0.0/user/"+ id +"/post",{
+        return fetch("http://localhost:3333/api/1.0.0/user"+ id +"/post",{
             method: 'post',
             headers: {
                 'Content-Type': 'application/json'

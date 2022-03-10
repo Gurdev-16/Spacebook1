@@ -30,7 +30,7 @@ class FriendScreen extends Component {
   getData = async () => {
     const id = await AsyncStorage.getItem('@session_id');
     const value = await AsyncStorage.getItem('@session_token');
-    return fetch("http://localhost:3333/api/1.0.0/user/"+id+"/friends",  {
+    return fetch("http://localhost:3333/api/1.0.0/user/"+ id +"/friends",  {
           'headers': {
             'X-Authorization':  value
         
@@ -52,11 +52,7 @@ class FriendScreen extends Component {
             listData: responseJson
           })
         })
-        .then(async () => {
-          await AsyncStorage.setItem('@session_token')
-          await AsyncStorage.setItem('@session_id')
         
-        })
         .catch((error) => {
             console.log(error);
         })
@@ -65,9 +61,14 @@ class FriendScreen extends Component {
   checkLoggedIn = async () => {
     const value = await AsyncStorage.getItem('@session_token');
     if (value == null) {
-        this.props.navigation.navigate('Login');
+        this.props.navigation.navigate('Login'); 
     }
-  };
+    else{
+      const value = await AsyncStorage.getItem('@session_id');
+    if (value == null) {
+        this.props.navigation.navigate('Login');}}
+        
+    };
 
   render() {
      if (this.state.isLoading){
