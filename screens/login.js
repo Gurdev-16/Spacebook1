@@ -39,6 +39,8 @@ class LoginScreen extends Component{
                 await AsyncStorage.setItem('@session_id', responseJson.id);
                 this.props.navigation.navigate("Home");
         })
+
+    
         .catch((error) => {
             console.log(error);
         })
@@ -69,7 +71,9 @@ class LoginScreen extends Component{
                     color="darkblue"
                     onPress={() => this.props.navigation.navigate("Signup")}
                 />
+                
             </ScrollView>
+            
         )
     }
 }

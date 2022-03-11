@@ -32,7 +32,9 @@ class FriendScreen extends Component {
     const value = await AsyncStorage.getItem('@session_token');
     return fetch("http://localhost:3333/api/1.0.0/user/"+ id +"/friends",  {
           'headers': {
+            'Content-Type': 'application/json',
             'X-Authorization':  value
+            
         
           }
         })
@@ -90,7 +92,8 @@ class FriendScreen extends Component {
                 data={this.state.listData.id}
                 renderItem={({item,}) => (
                     <View>
-                      <Text>{item.user_givenname} {item.user._familyname}</Text>
+                      <Text>{item.user_givenname} {item.user._familyname}  </Text>
+                      <Text>hello</Text>
                     </View>
                 )}
                 keyExtractor={(item,index) => item.user_id.toString()}
