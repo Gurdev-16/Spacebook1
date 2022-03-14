@@ -89,7 +89,7 @@ class FriendScreen extends Component {
       return (
         <View>
           <FlatList
-                data={this.state.listData.id}
+                data={this.state.getData}
                 renderItem={({item,}) => (
                     <View>
                       <Text>{item.user_givenname} {item.user._familyname}  </Text>

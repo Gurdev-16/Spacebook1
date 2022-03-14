@@ -111,7 +111,7 @@ class ProfileScreen extends Component {
            </View>
            <View>
           <FlatList
-                data={this.state.UserInfo}
+                data={this.state.getUserInfo}
                 renderItem={({item}) => (
                     <View>
                       <Text>

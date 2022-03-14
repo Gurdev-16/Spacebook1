@@ -22,7 +22,7 @@ const Tab = createDrawerNavigator();
 class App extends Component{
     render(){
         return (
-            //options={{ headerShown: false }}means that the header will not been shown 
+            //options={{ headerShown: false }}means that the header will not been shown so only the  tab navigation will be shown not the outer stack navigator 
             <NavigationContainer>
                 <Stack.Navigator >
                     <Stack.Screen name="Login" component={LoginScreen} />

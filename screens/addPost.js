@@ -11,71 +11,15 @@ class AddPostScreen extends Component {
             postListData: [],
             post_id: '',
             post_content: '',
+            text:""
         };
     }
 
-    /*componentDidMount() {
-        this.unsubscribe = this.props.navigation.addListener('focus', () => {
-            //this.checkLoggedIn();
-        });
-
-        this.getData();
-    }*/
     componentDidMount() {
-        console.log("mounted");
         this.getData(); 
     }
 
-    /*async getData() {
-        console.log("getting content...");
-        try {
-            let response = await fetch("http://localhost:3333/api/1.0.0/user/post",
-                {
-                    method: 'POST',
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify
-                        (
-                            {
-                                post_id: this.state.post_id,
-                                post_content: this.state.post_content,
-                            }
-                        )
-                });
-            // sign up method 
-            let res = await response.text();
-            if (response.status >= 200 && response.status < 300) { //if response correct then user is signed up
-                alert('Post created successfully! ' + " " + res);
-                //this.props.navigation.navigate('Login');
-
-            } else {
-                // error
-                alert('SOMETHING WENT WRONG' + res);
-                let error = res;
-                throw error;
-            }
-        }
-        catch (error) {
-        }
- };*/
-
-
-
-    /*deleteItem = (id) => {
-        return fetch("http://localhost:3333/list/" + id, {
-            method: 'delete'
-        })
-            .then((response) => {
-                this.getData();
-                Alert.alert("Post deleted");
-            })
-            .catch((error) => {
-                console.log(error);
-            })
-    }
-    */
+    
     getData = async () => {
         const id = await AsyncStorage.getItem('@session_id');
         const value = await AsyncStorage.getItem('@session_token');
@@ -89,7 +33,7 @@ class AddPostScreen extends Component {
                 if(response.status === 200){
                     return response.json()
                 }else if(response.status === 401){
-                  this.props.navigation.navigate("Login");
+                  //this.props.navigation.navigate("Login");
                 }else{
                   alert("Something went wrong");
                     throw 'Something went wrong';
@@ -116,22 +60,43 @@ class AddPostScreen extends Component {
       };
 
 
-    addItem = () => {
-        let to_send = {
-            id: parseInt(this.state.id),
-            content: this.state.content,
-        };
-
+    addItem = async() => {
+        let id = await AsyncStorage.getItem('@session_id');
+        let value = await AsyncStorage.getItem('@session_token');
         return fetch("http://localhost:3333/api/1.0.0/user"+ id +"/post",{
             method: 'post',
             headers: {
-                'Content-Type': 'application/json'
+                'X-Authorization':  value,
+                 'Content-Type': 'application/json',
+                 'Accept': 'application/json'
+                
             },
-            body: JSON.stringify(to_send)
+            text: this.state.text
         })
             .then((response) => {
                 Alert.alert("Post added");
                 this.getData();
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+    }
+    deletePost = async(post_id) => {
+        let id = await AsyncStorage.getItem('@session_id');
+        let value = await AsyncStorage.getItem('@session_token');
+        return fetch("http://localhost:3333/user/" + id +"/post/"+post_id, {
+            method: 'delete',
+            headers: {
+                'X-Authorization':  value,
+                 'Content-Type': 'application/json',
+                 'Accept': 'application/json'
+                
+            },
+            text: this.state.text
+        })
+            .then((response) => {
+                this.getData();
+                Alert.alert("Post deleted");
             })
             .catch((error) => {
                 console.log(error);
@@ -155,18 +120,23 @@ class AddPostScreen extends Component {
             return (
                     <View>
                         <TextInput
-                            placeholder="Create a post"
+                            placeholder="Type your post"
                             onChangeText={(post_content) => this.setState({ post_content })}
                             value={this.state.post_content}
                         />
                         <Button
-                        title="Upload your post"
-                        onPress={() => this.addItem()}
+                            title="Upload your post"
+                            onPress={() => this.addItem()}
+                    />
+
+                      <Button
+                           title="get your post"
+                           onPress={() => this.getData()}
                     />
                         <View>
                             <FlatList
-                            data={this.state.postListData}
-                            renderItem={({ item }) => (
+                             data={this.state.postListData}
+                             renderItem={({ item }) => (
                                 <View>
                                     <Text>{item.post_content}</Text>
                                 </View>
@@ -175,7 +145,10 @@ class AddPostScreen extends Component {
                             />
 
                         </View>
-
+                        <Button
+                        title="Delete post"
+                        onPress={() => this.deletePost()}
+                    />
                     </View>
             );
         }
