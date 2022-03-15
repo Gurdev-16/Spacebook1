@@ -13,7 +13,7 @@ class ProfileScreen extends Component {
       isLoading: true,
       listData: [],
       UserInfo: {},
-      photo: null,
+      photo:{},
     };
   }
 
@@ -23,8 +23,7 @@ class ProfileScreen extends Component {
     });
 
     this.getData();
-    this.getUserInfo();
-   // this.getProfilePic();
+    this.getPhoto();
   }
 
   componentWillUnmount() {
@@ -35,7 +34,8 @@ class ProfileScreen extends Component {
   getData = async () => {
     const id = await AsyncStorage.getItem('@session_id');
     const value = await AsyncStorage.getItem('@session_token');
-    return fetch("http://localhost:3333/api/1.0.0/search/", {
+    return fetch("http://localhost:3333/api/1.0.0/user/"+id+"/", {
+      method: 'GET',
           'headers': {
             'X-Authorization':  value 
             
@@ -67,16 +67,16 @@ class ProfileScreen extends Component {
         this.props.navigation.navigate('Login');
     }
   };
-  getUserInfo = async () => {
+  getPhoto= async () => {
     const id = await AsyncStorage.getItem('@session_id');
     const value = await AsyncStorage.getItem('@session_token');
-    return fetch("http://localhost:3333/api/1.0.0/user/"+ id, {
-           method: 'GET',
+    return fetch("http://localhost:3333/api/1.0.0/user/"+id+"/photo", {
+      method: 'GET',
           'headers': {
-            'Content-Type': 'application/json',
             'X-Authorization':  value 
+            
           }
-          })}
+        })}
 
 
           
@@ -96,52 +96,48 @@ class ProfileScreen extends Component {
         </View>
       );
     }else{
-
+console.log("here", this.state);
       return (
+  
         <View>
 
         <View>
           <Image
            source={{
-             uri:this.state.photo,
+             uri:this.state.Photo,
            }}
            
            />
 
            </View>
            <View>
-          <FlatList
-                data={this.state.getUserInfo}
+             <FlatList
+                data={this.state.listData}
                 renderItem={({item}) => (
                     <View>
                       <Text>
-            Name:
-            {' '}
-            {item.user_givenname}
-            {' '}
-            {item.user_familyname}
-          </Text>
-
-          <Text>
-           Email address:
-           {'  '}
-           {item.user_email}
-          </Text>
+                       Name:{" "}
+                      {item.user.UserInfo.first_name} 
+                      {item.user.UserInfo.lat_name}
+                      </Text>
                     </View>
                 )}
                 keyExtractor={(item,index) => item.user_id.toString()}
-              />
-        <View>
-         
-       </View>
-
-       <View style={styles.buttonContainer}>
-         <Button
-         style={styles.buttonStyle}
+                />
+              <Button
+      
          title="Edit"
          onPress={() => this.props.navigation.navigate('UploadPhoto')}
          />
-         </View>
+        <Button
+         title="Sign out"
+         onPress={() => this.props.navigation.navigate("Logout")}
+         />
+
+     </View>
+
+       <View style={styles.buttonContainer}>
+         
          </View>
          </View>
      
